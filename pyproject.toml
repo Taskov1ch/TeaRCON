@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "TeaRCON"
-version = "2.0"
+version = "3.0"
 description = "Бот для Telegeram позволяющий выполнять команды на сервере Minecraft по RCON"
 authors = ["TEANUS <teanus@mail.ru>", "Taskovich"]
 license = "GPL-3.0"
