@@ -1,31 +1,13 @@
-#
-#           Контакты разработчика:
-#               VK: vk.com/dimawinchester
-#               Telegram: t.me/teanus
-#               Github: github.com/teanus
-#
-#
-#
-# ████████╗███████╗ █████╗ ███╗   ██╗██╗   ██╗███████╗
-# ╚══██╔══╝██╔════╝██╔══██╗████╗  ██║██║   ██║██╔════╝
-#    ██║   █████╗  ███████║██╔██╗ ██║██║   ██║███████╗
-#    ██║   ██╔══╝  ██╔══██║██║╚██╗██║██║   ██║╚════██║
-#    ██║   ███████╗██║  ██║██║ ╚████║╚██████╔╝███████║
-#    ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚══════╝
-
-
 from pathlib import Path
 from typing import Any, Dict
-
+import os
 import yaml
 
-path: Path = Path(__file__).resolve().parents[1] / "config.yaml"
-
+path = os.getcwd() + "/config.yml"
 
 def read_yaml() -> Dict[str, Any]:
     with open(path, "r") as file:
         return yaml.safe_load(file)
-
 
 def telegram() -> Dict[str, Any]:
     return read_yaml()["Telegram"]
@@ -33,7 +15,6 @@ def telegram() -> Dict[str, Any]:
 
 def database() -> Dict[str, Any]:
     return read_yaml()["database"]
-
 
 def sqlite() -> Dict[str, Any]:
     return read_yaml()["sqlite"]

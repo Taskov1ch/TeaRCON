@@ -1,44 +1,33 @@
-#
-#           Контакты разработчика:
-#               VK: vk.com/dimawinchester
-#               Telegram: t.me/teanus
-#               Github: github.com/teanus
-#
-#
-#
-# ████████╗███████╗ █████╗ ███╗   ██╗██╗   ██╗███████╗
-# ╚══██╔══╝██╔════╝██╔══██╗████╗  ██║██║   ██║██╔════╝
-#    ██║   █████╗  ███████║██╔██╗ ██║██║   ██║███████╗
-#    ██║   ██╔══╝  ██╔══██║██║╚██╗██║██║   ██║╚════██║
-#    ██║   ███████╗██║  ██║██║ ╚████║╚██████╔╝███████║
-#    ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚══════╝
-
-
-from aiogram.utils import executor
-
 from add_super_admin import console_add_super_admin
-from create_bot import dp
-from handlers import admin, client, common, other
+from aiogram import Bot, Dispatcher
+from dotenv import load_dotenv
 from logger.log import logger
+from routers import other, common, client, admin
+import asyncio
+import os
 
+load_dotenv()
 
-async def on_startup(_) -> None:
-    print("Бот начал работу!")
-    logger.info("Бот запущен!")
-    print(await console_add_super_admin())
+bot = Bot(token = os.getenv("TOKEN"))
+dp = Dispatcher()
 
+async def on_startup(bot: Bot) -> None:
+	logger.info("Бот запущен!")
+	await console_add_super_admin()
 
-async def on_shutdown(_) -> None:
-    print("Бот выключен")
-    logger.info("Бот выключен")
+async def run() -> None:
+	dp.startup.register(on_startup)
+	dp.include_routers(other.rt)
+	await other.register_handlers()
+	dp.include_routers(common.rt)
+	await common.register_handlers()
+	dp.include_routers(client.rt)
+	await client.register_handlers()
+	dp.include_routers(admin.rt)
+	await admin.register_handlers()
 
-
-admin.register_handlers_admin(dp)
-client.register_handlers_client(dp)
-other.register_handlers_other(dp)
-common.register_handlers_common(dp)
+	await bot.delete_webhook(drop_pending_updates = True)
+	await dp.start_polling(bot)
 
 if __name__ == "__main__":
-    executor.start_polling(
-        dp, skip_updates=True, on_startup=on_startup, on_shutdown=on_shutdown
-    )
+	asyncio.run(run())

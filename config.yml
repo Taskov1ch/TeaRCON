@@ -1,0 +1,15 @@
+Telegram:
+  on_logger_group: True  # логирование в группе телеграм (True - вкл, False - выкл)
+  logger_chat_id: -1001847427722  # id группы для логирования бота (если включено)
+
+database:
+  type: "sqlite"  # Выбери провайдера (postgresql или sqlite)
+
+postgresql:
+  name: "teanus_rcon_bot"
+
+sqlite:
+  name: "sqlite_db.db"
+
+console:
+  give_role: True  # Включите, если хотите выдать админ роль (лучше перед этим получить свой id)

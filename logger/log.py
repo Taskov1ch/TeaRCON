@@ -1,31 +1,10 @@
-#
-#           Контакты разработчика:
-#               VK: vk.com/dimawinchester
-#               Telegram: t.me/teanus
-#               Github: github.com/teanus
-#
-#
-#
-# ████████╗███████╗ █████╗ ███╗   ██╗██╗   ██╗███████╗
-# ╚══██╔══╝██╔════╝██╔══██╗████╗  ██║██║   ██║██╔════╝
-#    ██║   █████╗  ███████║██╔██╗ ██║██║   ██║███████╗
-#    ██║   ██╔══╝  ██╔══██║██║╚██╗██║██║   ██║╚════██║
-#    ██║   ███████╗██║  ██║██║ ╚████║╚██████╔╝███████║
-#    ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚══════╝
+from loguru import logger
+import sys
 
-import logging
+logger.remove()
+logger.add(sys.stderr, format = "{time:YYYY-MM-DD HH:mm:ss} | {level} | > {message}")
 
-logger = logging.getLogger(__name__)
-
-logger.setLevel(logging.INFO)
-
-log_filename = "info.log"
-file_handler = logging.FileHandler(log_filename)
-
-formatter = logging.Formatter(
-    "%(asctime)s - TeaLogger - %(levelname)s - %(message)s", datefmt="%Y-%m-%d %H:%M:%S"
-)
-
-file_handler.setFormatter(formatter)
-
-logger.addHandler(file_handler)
+# logger.debug("Это сообщение уровня DEBUG")
+# logger.info("Это сообщение уровня INFO")
+# logger.warning("Это сообщение уровня WARNING")
+# logger.error("Это сообщение уровня ERROR")
